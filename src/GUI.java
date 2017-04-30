@@ -15,19 +15,21 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		addDefaultColors();
+		add(new Constelations(FRAME_SIZE));
 
 		graphicsWrapper.setSize(FRAME_SIZE.width, FRAME_SIZE.height);
 		graphicsWrapper.setBackground(hex2Rgb(hexColors.get(0)));
 		add(graphicsWrapper, BorderLayout.CENTER);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(FRAME_SIZE.width, FRAME_SIZE.height);
+		setSize(FRAME_SIZE.width, 2*FRAME_SIZE.height);
 		setVisible(true);
 		makeControlPanel();
 	}
 
 	private void makeControlPanel() {
 		JFrame controlFrame = new JFrame();
+		controlFrame.setLayout(new FlowLayout());
 		controlFrame.setSize(CONTROL_BUTTON_SIZE.width, CONTROL_BUTTON_SIZE.height);
 
 		JButton changeBGButton = new JButton();
@@ -39,11 +41,26 @@ public class GUI extends JFrame {
 				if (colorPointer == hexColors.size() - 1) colorPointer = 0;
 				else colorPointer++;
 				graphicsWrapper.setBackground(hex2Rgb(hexColors.get(colorPointer)));
+				graphicsWrapper.repaint();
 			}
 		});
 
-
 		controlFrame.add(changeBGButton);
+
+		JButton constelationButton = new JButton();
+		constelationButton.setText("Constelation");
+		constelationButton.setPreferredSize(CONTROL_BUTTON_SIZE);
+
+		constelationButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				graphicsWrapper.add(new Constelations(FRAME_SIZE));
+				graphicsWrapper.repaint();
+			}
+		});
+
+		controlFrame.add(constelationButton);
+
+		controlFrame.setLocation(new Point(FRAME_SIZE.width + 10, 0));
 		controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		controlFrame.setVisible(true);
 	}
