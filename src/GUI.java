@@ -15,7 +15,6 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		addDefaultColors();
-		add(new Constelations(FRAME_SIZE));
 
 		graphicsWrapper.setSize(FRAME_SIZE.width, FRAME_SIZE.height);
 		graphicsWrapper.setBackground(hex2Rgb(hexColors.get(0)));
@@ -53,8 +52,14 @@ public class GUI extends JFrame {
 
 		constelationButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				graphicsWrapper.add(new Constelations(FRAME_SIZE));
-				graphicsWrapper.repaint();
+				System.out.println(e.getClickCount());
+				if (e.getClickCount() % 2 == 1) {
+					graphicsWrapper.add(new Constelations(FRAME_SIZE));
+					graphicsWrapper.repaint();
+				} else {
+					graphicsWrapper.remove(graphicsWrapper.getComponent(0));
+					repaint();
+				}
 			}
 		});
 

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Constelations extends JComponent {
-	final int COUNT_OF_POINTS = 10;
+	final int COUNT_OF_POINTS = 5;
 	Point[] points;
 
 	public Constelations(Dimension d) {
@@ -31,8 +31,21 @@ public class Constelations extends JComponent {
 			for (Point p : points) {
 				g2.fillOval(p.x, p.y, 10, 10);
 			}
+
+			g2.drawPolygon(makeConstelation());
 		} catch (NullPointerException e) {
 			System.out.println("Skipping painting until NullPointerException is resolved");
 		}
+	}
+
+	private Polygon makeConstelation() {
+		int[] xCoords = new int[points.length];
+		int[] yCoords = new int[points.length];
+		for (int i=0;i<points.length;i++) {
+			xCoords[i] = points[i].x;
+			yCoords[i] = points[i].y;
+		}
+
+		return new Polygon(xCoords, yCoords, points.length);
 	}
 }
